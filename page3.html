@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carma Form</title>
+    <link rel="stylesheet" href="./page3.css">
+    <script defer src="./page3.js"></script>
+
+</head>
+
+<body>
+    <div class="header">
+        <div class="logo"></div>
+          <h1>carma</h1>
+    </div>
+
+    <div class="container">
+        <form id="form" action="./page4.html" method="GET">
+
+            <div class="input-control" id="all">
+                <label for="fullname" class="heading">Full Name</label>
+                <input id="fullname" name="fullname" type="text" placeholder="Full Name">
+                <div class="error"></div>
+            </div>
+
+            <div class="input-control" id="all">
+                <label for="salary" class="heading">Salary</label>
+                <input id="salary" name="salary" type="numerical" placeholder="Salary (in numbers)">
+                <div class="error"></div>
+            </div>
+
+            <div class="input-control" id="all">
+                <label for="obligation" class="heading">Monthly Obligation</label>
+                <input id="obligation" name="obligation" type="numerical" placeholder="Monthly Obligation (in numbers)">
+                <div class="error"></div>
+            </div>
+
+            <div class="input-control" id="all">
+                <label for="rent" class="heading">Expected Yearly Rent Amount</label>
+                <input id="rent" name="rent" type="numerical" placeholder="Expected Yearly Rent Amount (in numbers)">
+                <div class="error"></div>
+            </div>
+
+            <div class="input-control" id="all">
+                <label for="date" class="heading">Expected Rent Start Date</label>
+                <input id="date" name="date" type="date" min="2023-10-07">
+                <div class="error"></div>
+            </div>
+
+            <button id="btn" class="Start-btn" type="submit" value="submit">Next</button>
+        </form>
+    </div>
+
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+        import {getDatabase, ref, set, get, child} from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
+        
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+      apiKey: "AIzaSyAO92U_qjWw9L2v-xnJf_Z-U8x1eOQRhQw",
+      authDomain: "carma6-bfe90.firebaseapp.com",
+      projectId: "carma6-bfe90",
+      storageBucket: "carma6-bfe90.appspot.com",
+      messagingSenderId: "424736990719",
+      appId: "1:424736990719:web:414fd8e8de79d01818b3ca"
+    };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+    
+    
+        // get ref to database services
+        const db = getDatabase(app);
+    
+        document.getElementById("btn").addEventListener('click', function(e){
+            form.addEventListener('submit', e =>{
+    
+    validateInputs();
+    
+    console.log(isFormValid());
+    if(isFormValid()==true){
+        form.submit() ;
+        alert("thanks");
+     }else {
+         e.preventDefault();
+         alert("Please fill out the form correctly.");
+     }
+    
+    });
+    
+            set(ref(db, 'information1/' + document.getElementById("fullname").value),
+            {
+                FullName: document.getElementById("fullname").value,
+                Salary: document.getElementById("salary").value,
+                Obligation: document.getElementById("obligation").value,
+                Rent: document.getElementById("rent").value,
+                Date: document.getElementById("date").value 
+            });
+            
+        })
+      </script>
+
+
+    
+</body>
+</html>
